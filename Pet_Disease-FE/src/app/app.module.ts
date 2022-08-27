@@ -20,6 +20,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { DetectDisorderComponent } from './features/detect-disorder/detect-disorder.component';
 import { ImageUploaderModule } from 'ngx-image-uploader-next';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { NgOpenCVModule, OpenCVOptions } from "ng-open-cv";
+import { CommonModule } from '@angular/common';
+
+const openCVConfig: OpenCVOptions = {
+  scriptUrl: `assets/opencv/opencv.js`,
+  wasmBinaryFile: 'wasm/opencv_js.wasm',
+  usingWasm: true
+};
 
 @NgModule({
   declarations: [
@@ -42,11 +50,13 @@ import { NgxSpinnerModule } from "ngx-spinner";
     FormsModule,
     ReactiveFormsModule,
     NgBootstrapFormValidationModule.forRoot(),
+    NgOpenCVModule.forRoot(openCVConfig),
     ImageUploaderModule,
     BrowserAnimationsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    CommonModule
   ],
-  exports: [BrowserModule],
+  exports: [BrowserModule, NgOpenCVModule],
   providers: [{ provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: environment.apiUrl } }],
   bootstrap: [AppComponent]
 })

@@ -1228,14 +1228,14 @@ SECTION TESTIMONIAL
 
 .test-inner:hover {
   box-shadow: 0 7px 22px rgba(0, 0, 0, 0.08);
+  background: #000;
+  color: #fff;
 }
 
-.test-inner i {
-  font-size: 60px;
-  opacity: 0.09;
-  position: absolute;
-  right: 40px;
-  bottom: 20px;
+.test-inner:active {
+  color: #fafafa !important;
+  border: 5px solid #00a884 !important;
+  transition: color 0.35s ease 0s;
 }
 
 .test-author-thumb {
