@@ -18,96 +18,222 @@
           <a ngbNavLink>Step #01</a>
           <ng-template ngbNavContent>
             <div class="row">
-              <div class="col-12">
-                <div class="card" *ngIf="imageUploadBoolean == 0">
-                  <h3 class="card-header" style="color: #21c87a;">
-                    Upload your image
-                  </h3>
-                  <div class="card-body">
-                    <div class="text-right">
-                      <div *ngIf="message == 'Active'">
-                        <div class="badge badge-primary">Active API</div>
-                      </div>
-                      <div *ngIf="message == 'Inactive'">
-                        <div class="badge badge-danger">Inactive API</div>
+              <div class="col-4 nav-tabs" ngbNav #navType="ngbNav" [(activeId)]="activeType">
+                <h3>Select Your Pet Category</h3>
+                <a [ngbNavItem]="1">
+                  <a ngbNavLink class="test-inner">
+                    <div class="test-author-thumb d-flex">
+                      <img
+                        src="https://images.unsplash.com/photo-1504430225224-21a649ac91bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
+                        alt="Testimonial author" class="img-fluid">
+                      <div class="test-author-info">
+                        <h4>Feline Diseases</h4>
+                        <h6>Please select your cat disease factors</h6>
                       </div>
                     </div>
+                  </a>
 
-                    <hr />
-                    <div *ngFor="let progressInfo of progressInfos" class="mb-2">
-                      <span>{{ progressInfo.fileName }}</span>
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
-                          attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
-                          [ngStyle]="{ width: progressInfo.value + '%' }">
-                          {{ progressInfo.value }}%
+                  <ng-template ngbNavContent>
+                    <div class="card" *ngIf="imageUploadBoolean == 0">
+                      <h3 class="card-header" style="color: #21c87a;">
+                        Upload your image
+                      </h3>
+                      <div class="card-body">
+                        <div class="text-right">
+                          <div *ngIf="message == 'Active'">
+                            <div class="badge badge-primary">Active API</div>
+                          </div>
+                          <div *ngIf="message == 'Inactive'">
+                            <div class="badge badge-danger">Inactive API</div>
+                          </div>
+                        </div>
+
+                        <hr />
+                        <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+                          <span>{{ progressInfo.fileName }}</span>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                              attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
+                              [ngStyle]="{ width: progressInfo.value + '%' }">
+                              {{ progressInfo.value }}%
+                            </div>
+                          </div>
+                        </div>
+                        <p>
+                          Please upload your pet image standard size. Because it affects the
+                          final outcome.....
+                        </p>
+                        <div class="col-12 text-right">
+                          <label class="btn btn-default">
+                            <input type="file" multiple (change)="selectFiles($event)" accept="image/*" />
+                          </label>
+                          <div *ngIf="active == 1">
+                            <button class="btn-new btn-dark" [disabled]="!selectedFiles" (click)="uploadFiles()">
+                              Image Analysis
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <p>
-                      Please upload your pet image standard size. Because it affects the
-                      final outcome.....
-                    </p>
-                    <div class="col-12 text-right">
-                      <label class="btn btn-default">
-                        <input type="file" multiple (change)="selectFiles($event)" accept="image/*" />
-                      </label>
-                      <div *ngIf="active == 1">
-                        <button class="btn-new btn-dark" [disabled]="!selectedFiles" (click)="uploadFiles()">
-                          Image Analysis
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <h3 class="card-header" style="color: #21c87a;">
-                    Your image analysis
-                  </h3>
-                  <div class="card-body">
-                    <div class="text-right" *ngIf="openCVLoadResult | async as result">
-                      <div class="badge badge-success" *ngIf="result.loading">
-                        Waiting for OpenCV.js to load!
-                      </div>
-                      <div class="badge badge-primary" *ngIf="result.ready">
-                        OpenCV.js is ready!
-                      </div>
-                      <div class="badge badge-warning" *ngIf="result.error">
-                        OpenCV.js load error!
-                      </div>
-                    </div>
-                    <hr />
+                    <div class="card">
+                      <h3 class="card-header" style="color: #21c87a;">
+                        Your image analysis
+                      </h3>
+                      <div class="card-body">
+                        <div class="text-right" *ngIf="openCVLoadResult | async as result">
+                          <div class="badge badge-success" *ngIf="result.loading">
+                            Waiting for OpenCV.js to load!
+                          </div>
+                          <div class="badge badge-primary" *ngIf="result.ready">
+                            OpenCV.js is ready!
+                          </div>
+                          <div class="badge badge-warning" *ngIf="result.error">
+                            OpenCV.js load error!
+                          </div>
+                        </div>
+                        <hr />
 
-                    <div class="row text-center">
-                      <div class="col-6">
-                        <canvas #canvas id="canvas" width="750" height="500"
-                          style="border: 1px solid mediumspringgreen;width: inherit;"></canvas>
-                      </div>
-                      <div class="col-6 text-justify output-box">
-                        <h4 class="text-center">OpenCV data analysis</h4>
-                        <table class="table">
-                          <tr>
-                            <td>Disease Percentage</td>
-                            <td>{{ diseasePercentage }}</td>
-                          </tr>
-                          <tr>
-                            <td>White Dots Count</td>
-                            <td>{{ whiteDotsCount }}</td>
-                          </tr>
-                          <tr>
-                            <td>Yellow Dots Count</td>
-                            <td>{{ yellowDotsCount }}</td>
-                          </tr>
-                        </table>
-                      </div>
-                      <div class="col-12 text-right">
-                        <button class="btn-new btn-primary" [disabled]="active === 2" (click)="nav.select(2)">
-                          Next <i class="fa fa-arrow-right"></i>
-                        </button>
+                        <div class="row text-center">
+                          <div class="col-6">
+                            <canvas #canvas id="canvas" width="750" height="500"
+                              style="border: 1px solid mediumspringgreen;width: inherit;"></canvas>
+                          </div>
+                          <div class="col-6 text-justify output-box">
+                            <h4 class="text-center">OpenCV data analysis</h4>
+                            <table class="table">
+                              <tr>
+                                <td>Disease Percentage</td>
+                                <td>{{ diseasePercentage }}</td>
+                              </tr>
+                              <tr>
+                                <td>White Dots Count</td>
+                                <td>{{ whiteDotsCount }}</td>
+                              </tr>
+                              <tr>
+                                <td>Yellow Dots Count</td>
+                                <td>{{ yellowDotsCount }}</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div class="col-12 text-right">
+                            <button class="btn-new btn-primary" [disabled]="active === 2" (click)="nav.select(2)">
+                              Next <i class="fa fa-arrow-right"></i>
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                  </ng-template>
+                </a>
+                <br>
+                <a [ngbNavItem]="2">
+                  <a ngbNavLink class="test-inner">
+                    <div class="test-author-thumb d-flex">
+                      <img
+                        src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                        alt="Testimonial author" class="img-fluid">
+                      <div class="test-author-info">
+                        <h4>Canine Diseases</h4>
+                        <h6>Please select your dog disease factors</h6>
+                      </div>
+                    </div>
+                  </a>
+
+                  <ng-template ngbNavContent>
+                    <div class="card" *ngIf="imageUploadBoolean == 0">
+                      <h3 class="card-header" style="color: #21c87a;">
+                        Upload your image
+                      </h3>
+                      <div class="card-body">
+                        <div class="text-right">
+                          <div *ngIf="message == 'Active'">
+                            <div class="badge badge-primary">Active API</div>
+                          </div>
+                          <div *ngIf="message == 'Inactive'">
+                            <div class="badge badge-danger">Inactive API</div>
+                          </div>
+                        </div>
+
+                        <hr />
+                        <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+                          <span>{{ progressInfo.fileName }}</span>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                              attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
+                              [ngStyle]="{ width: progressInfo.value + '%' }">
+                              {{ progressInfo.value }}%
+                            </div>
+                          </div>
+                        </div>
+                        <p>
+                          Please upload your pet image standard size. Because it affects the
+                          final outcome.....
+                        </p>
+                        <div class="col-12 text-right">
+                          <label class="btn btn-default">
+                            <input type="file" multiple (change)="selectFiles($event)" accept="image/*" />
+                          </label>
+                          <div *ngIf="active == 1">
+                            <button class="btn-new btn-dark" [disabled]="!selectedFiles" (click)="uploadFiles()">
+                              Image Analysis
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <h3 class="card-header" style="color: #21c87a;">
+                        Your image analysis
+                      </h3>
+                      <div class="card-body">
+                        <div class="text-right" *ngIf="openCVLoadResult | async as result">
+                          <div class="badge badge-success" *ngIf="result.loading">
+                            Waiting for OpenCV.js to load!
+                          </div>
+                          <div class="badge badge-primary" *ngIf="result.ready">
+                            OpenCV.js is ready!
+                          </div>
+                          <div class="badge badge-warning" *ngIf="result.error">
+                            OpenCV.js load error!
+                          </div>
+                        </div>
+                        <hr />
+
+                        <div class="row text-center">
+                          <div class="col-6">
+                            <canvas #canvas id="canvas" width="750" height="500"
+                              style="border: 1px solid mediumspringgreen;width: inherit;"></canvas>
+                          </div>
+                          <div class="col-6 text-justify output-box">
+                            <h4 class="text-center">OpenCV data analysis</h4>
+                            <table class="table">
+                              <tr>
+                                <td>Disease Percentage</td>
+                                <td>{{ diseasePercentage }}</td>
+                              </tr>
+                              <tr>
+                                <td>White Dots Count</td>
+                                <td>{{ whiteDotsCount }}</td>
+                              </tr>
+                              <tr>
+                                <td>Yellow Dots Count</td>
+                                <td>{{ yellowDotsCount }}</td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div class="col-12 text-right">
+                            <button class="btn-new btn-primary" [disabled]="active === 2" (click)="nav.select(2)">
+                              Next <i class="fa fa-arrow-right"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </a>
+              </div>
+              <div class="col-8" [ngbNavOutlet]="navType">
+
               </div>
             </div>
           </ng-template>
@@ -115,51 +241,70 @@
         <li [ngbNavItem]="2" [disabled]="active === 1 || active === 3">
           <a ngbNavLink>Step #02</a>
           <ng-template ngbNavContent>
-            <div class="row">
-                <div class="col-4 nav-tabs" ngbNav #navType="ngbNav" [(activeId)]="activeType">
-                  <h3>Select Your Pet Category</h3>
-                  <div [ngbNavItem]="1">
-                    <a ngbNavLink class="test-inner" >
-                      <div class="test-author-thumb d-flex">
-                        <img
-                          src="https://images.unsplash.com/photo-1504430225224-21a649ac91bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
-                          alt="Testimonial author" class="img-fluid">
-                        <div class="test-author-info">
-                          <h4>Feline Questions</h4>
-                          <h6>Please select your dog disease factors</h6>
-                        </div>
+            <div class="row pet-list-step">
+              <div class="col-4 nav-tabs" ngbNav #navType2="ngbNav" [(activeId)]="activeType2">
+                <h3>Select Your Pet Category</h3>
+                <a [ngbNavItem]="1">
+                  <a ngbNavLink class="test-inner">
+                    <div class="test-author-thumb d-flex">
+                      <img
+                        src="https://images.unsplash.com/photo-1504430225224-21a649ac91bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
+                        alt="Testimonial author" class="img-fluid">
+                      <div class="test-author-info">
+                        <h4>Feline Diseases</h4>
+                        <h6>Please select your cat disease factors</h6>
                       </div>
-                    </a>
+                    </div>
+                  </a>
 
-                    <ng-template ngbNavContent>
-                      <div class="project-content">
-                        <h1>Please select your feline disease factors</h1>
+                  <ng-template ngbNavContent>
+                    <div class="service-content">
+                      <h3>Please select your feline disease symptoms</h3>
+                      <ng-select [items]="diseasesFeline" [multiple]="true" [closeOnSelect]="false" [searchable]="false"
+                        bindLabel="name" placeholder="Select disease symptoms" [(ngModel)]="selectedDiseaseFeline">
+                      </ng-select>
+                      <div class="mt-3">
+                        Selected disease symptoms: <br />
+                        <ul class="item-list">
+                          <li *ngFor="let item of selectedDiseaseFeline">{{item.name}}</li>
+                        </ul>
+                        <button (click)="clearDiseaseFeline()" class="btn-new btn-dark">Clear Selected List</button>
+                      </div>
+                    </div>
+                  </ng-template>
+                </a>
+                <br>
+                <a [ngbNavItem]="2">
+                  <a ngbNavLink class="test-inner">
+                    <div class="test-author-thumb d-flex">
+                      <img
+                        src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                        alt="Testimonial author" class="img-fluid">
+                      <div class="test-author-info">
+                        <h4>Canine Diseases</h4>
+                        <h6>Please select your dog disease factors</h6>
+                      </div>
+                    </div>
+                  </a>
 
+                  <ng-template ngbNavContent>
+                    <div class="service-content">
+                      <h3>Please select your canine disease symptoms</h3>
+                      <ng-select [items]="diseasesCanine" [multiple]="true" [closeOnSelect]="false" [searchable]="false"
+                        bindLabel="name" placeholder="Select disease symptoms" [(ngModel)]="selectedDiseaseCanine">
+                      </ng-select>
+                      <div class="mt-3">
+                        Selected disease symptoms: <br />
+                        <ul class="item-list">
+                          <li *ngFor="let item of selectedDiseaseCanine">{{item.name}}</li>
+                        </ul>
+                        <button (click)="clearDiseaseCanine()" class="btn-new btn-dark">Clear Selected List</button>
                       </div>
-                    </ng-template>
-                  </div>
-                  <hr>
-                  <div [ngbNavItem]="2">
-                    <a ngbNavLink class="test-inner" >
-                      <div class="test-author-thumb d-flex">
-                        <img
-                          src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          alt="Testimonial author" class="img-fluid">
-                        <div class="test-author-info">
-                          <h4>Canine Questions</h4>
-                          <h6>Please select your cat disease factors</h6>
-                        </div>
-                      </div>
-                    </a>
-
-                    <ng-template ngbNavContent>
-                      <div class="project-content">
-                        <h1>Please select your canine disease factors</h1>
-                      </div>
-                    </ng-template>
-                  </div>
-                </div>
-              <div class="col-8" [ngbNavOutlet]="navType">
+                    </div>
+                  </ng-template>
+                </a>
+              </div>
+              <div class="col-8" [ngbNavOutlet]="navType2">
                 <!-- <div >
                   <h1>ssss</h1>
                 </div>

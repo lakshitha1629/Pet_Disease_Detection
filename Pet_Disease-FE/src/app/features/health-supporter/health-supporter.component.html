@@ -1,0 +1,223 @@
+<section class="section" id="process">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6 text-center">
+        <div class="section-heading">
+          <!-- Heading -->
+          <h2 class="section-title">Create Your Own Project</h2>
+        </div>
+      </div>
+    </div>
+    <div class="justify-content-center">
+      <button class="btn-new btn-warning" (click)="reset()">
+        Project Reset <i class="fa fa-refresh"></i>
+      </button>
+      <hr>
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1" [disabled]="active === 2 || active === 3 || active === 4">
+          <a ngbNavLink>Step #01</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12">
+                <h3>Select Your Pet Category</h3>
+                <br>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="test-inner" [ngClass]="selectedPetCategory==0 ? 'active' : ''"
+                      (click)="onSavePetCategory(0)">
+                      <div class="test-author-thumb d-flex">
+                        <img
+                          src="https://images.unsplash.com/photo-1504430225224-21a649ac91bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
+                          alt="Testimonial author" class="img-fluid">
+                        <div class="test-author-info">
+                          <h4>Feline Diseases</h4>
+                          <h6>Please look and identify your cat disease</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="test-inner" [ngClass]="selectedPetCategory==1 ? 'active' : ''"
+                      (click)="onSavePetCategory(1)">
+                      <div class="test-author-thumb d-flex">
+                        <img
+                          src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                          alt="Testimonial author" class="img-fluid">
+                        <div class="test-author-info">
+                          <h4>Canine Diseases</h4>
+                          <h6>Please look and identify your dog disease</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 text-right">
+                <button class="btn-new btn-primary" [disabled]="active === 2" (click)="nav.select(2)">
+                  Next <i class="fa fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2" [disabled]="active === 1 || active === 3 || active === 4">
+          <a ngbNavLink>Step #02</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12" *ngIf="selectedPetCategory==0">
+                <h3>Please select your feline disease symptoms</h3>
+                <ng-select [items]="diseasesFeline" [multiple]="true" [closeOnSelect]="false" [searchable]="false"
+                  bindLabel="name" placeholder="Select disease symptoms" [(ngModel)]="selectedDiseaseFeline">
+                </ng-select>
+                <div class="mt-3">
+                  Selected disease symptoms: <br />
+                  <ul class="item-list">
+                    <li *ngFor="let item of selectedDiseaseFeline">{{item.name}}</li>
+                  </ul>
+                  <button (click)="clearDiseaseFeline()" class="btn-new btn-dark">Clear Selected List</button>
+                </div>
+              </div>
+              <div class="col-12" *ngIf="selectedPetCategory==1">
+                <h3>Please select your canine disease symptoms</h3>
+                <ng-select [items]="diseasesCanine" [multiple]="true" [closeOnSelect]="false" [searchable]="false"
+                  bindLabel="name" placeholder="Select disease symptoms" [(ngModel)]="selectedDiseaseCanine">
+                </ng-select>
+                <div class="mt-3">
+                  Selected disease symptoms: <br />
+                  <ul class="item-list">
+                    <li *ngFor="let item of selectedDiseaseCanine">{{item.name}}</li>
+                  </ul>
+                  <button (click)="clearDiseaseCanine()" class="btn-new btn-dark">Clear Selected List</button>
+                </div>
+              </div>
+              <div class="col-12 text-right">
+                <button class="btn-new btn-primary" [disabled]="active === 3" (click)="nav.select(3)">
+                  Next <i class="fa fa-arrow-right"></i>
+                </button>
+
+                <button class="btn-new btn-secondry" [disabled]="active === 3" (click)="nav.select(3)">
+                  Skip <i class="fa fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3" [disabled]="active === 1 || active === 2 || active === 4">
+          <a ngbNavLink>Step #03</a>
+          <ng-template ngbNavContent>
+            <div class="card" *ngIf="imageUploadBoolean == 0">
+              <h3 class="card-header" style="color: #21c87a;">
+                Upload your image
+              </h3>
+              <div class="card-body">
+                <div class="text-right">
+                  <div *ngIf="message == 'Active'">
+                    <div class="badge badge-primary">Active API</div>
+                  </div>
+                  <div *ngIf="message == 'Inactive'">
+                    <div class="badge badge-danger">Inactive API</div>
+                  </div>
+                </div>
+
+                <hr />
+                <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+                  <span>{{ progressInfo.fileName }}</span>
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                      attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
+                      [ngStyle]="{ width: progressInfo.value + '%' }">
+                      {{ progressInfo.value }}%
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Please upload your pet image standard size. Because it affects the
+                  final outcome.....
+                </p>
+                <div class="col-12 text-right">
+                  <label class="btn btn-default">
+                    <input type="file" multiple (change)="selectFiles($event)" accept="image/*" />
+                  </label>
+                  <div *ngIf="active == 1">
+                    <button class="btn-new btn-dark" [disabled]="!selectedFiles" (click)="uploadFiles()">
+                      Image Analysis
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h3 class="card-header" style="color: #21c87a;">
+                Your image analysis
+              </h3>
+              <div class="card-body">
+                <div class="text-right" *ngIf="openCVLoadResult | async as result">
+                  <div class="badge badge-success" *ngIf="result.loading">
+                    Waiting for OpenCV.js to load!
+                  </div>
+                  <div class="badge badge-primary" *ngIf="result.ready">
+                    OpenCV.js is ready!
+                  </div>
+                  <div class="badge badge-warning" *ngIf="result.error">
+                    OpenCV.js load error!
+                  </div>
+                </div>
+                <hr />
+
+                <div class="row text-center">
+                  <div class="col-6">
+                    <canvas #canvas id="canvas" width="750" height="500"
+                      style="border: 1px solid mediumspringgreen;width: inherit;"></canvas>
+                  </div>
+                  <div class="col-6 text-justify output-box">
+                    <h4 class="text-center">OpenCV data analysis</h4>
+                    <table class="table">
+                      <tr>
+                        <td>Disease Percentage</td>
+                        <td>{{ diseasePercentage }}</td>
+                      </tr>
+                      <tr>
+                        <td>White Dots Count</td>
+                        <td>{{ whiteDotsCount }}</td>
+                      </tr>
+                      <tr>
+                        <td>Yellow Dots Count</td>
+                        <td>{{ yellowDotsCount }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col-12 text-right">
+                    <button class="btn-new btn-primary" [disabled]="active === 1" (click)="nav.select(4)">
+                      Next <i class="fa fa-arrow-right"></i>
+                    </button>
+                    <button class="btn-new btn-secondry" [disabled]="active === 1" (click)="nav.select(4)">
+                      Skip <i class="fa fa-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="4" [disabled]="active === 1 || active === 2 || active === 3">
+          <a ngbNavLink>Final Result</a>
+          <ng-template ngbNavContent>
+            <div class="row justify-content-md-center">
+              <h4>Predicted Disease</h4>
+
+            </div>
+            <div class="row justify-content-md-center">
+              <div>
+                <ul class="item-list badge badge-warning"  style="font-size: 24px">
+                  <li *ngFor="let item of resultList">{{item.name}}</li>
+                </ul>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="nav" class="mt-5"></div>
+    </div>
+  </div>
+</section>

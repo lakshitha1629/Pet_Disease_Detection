@@ -1,0 +1,12 @@
+.item-list{
+  max-height: 18rem;
+  overflow: auto;
+}
+
+.pet-list> .nav{
+  display: inline-table;
+}
+
+.pet-list-step > .nav{
+  display: block;
+}

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './layout/about/about.component';
 import { HomeComponent } from './layout/home/home.component';
 import { DetectDisorderComponent } from './features/detect-disorder/detect-disorder.component';
+import { HealthSupporterComponent } from './features/health-supporter/health-supporter.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'detect-disorder',
     component: DetectDisorderComponent,
+  },
+  {
+    path: 'health-supporter',
+    component: HealthSupporterComponent,
   },
   {
     path: 'about',

@@ -19,6 +19,7 @@
 * ----------------------------------------
 */
 @import url("https://fonts.googleapis.com/css?family=Muli:300,400,500,700,900");
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -431,6 +432,7 @@ PRELOADER
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg);
@@ -442,6 +444,7 @@ PRELOADER
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
+
   100% {
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg);
@@ -832,11 +835,9 @@ h5.subtitle {
   top: 0px;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(
-    30deg,
-    rgba(121, 110, 255, 0.95) 0%,
-    rgba(33, 200, 122, 0.95) 100%
-  );
+  background-image: linear-gradient(30deg,
+      rgba(121, 110, 255, 0.95) 0%,
+      rgba(33, 200, 122, 0.95) 100%);
 }
 
 .web-service-block {
@@ -909,11 +910,9 @@ h5.subtitle {
 }
 
 .overlay.feature-overlay {
-  background-image: linear-gradient(
-    30deg,
-    rgba(121, 110, 255, 0.95) 0%,
-    rgba(33, 200, 122, 0.95) 100%
-  );
+  background-image: linear-gradient(30deg,
+      rgba(121, 110, 255, 0.95) 0%,
+      rgba(33, 200, 122, 0.95) 100%);
   opacity: 0.9;
 }
 
@@ -1232,10 +1231,11 @@ SECTION TESTIMONIAL
   color: #fff;
 }
 
-.test-inner:active {
+.test-inner.active {
   color: #fafafa !important;
-  border: 5px solid #00a884 !important;
-  transition: color 0.35s ease 0s;
+  border: 2px solid #00a884 !important;
+  background-color: #fafafa !important;
+  transition: color 0.35s ease 0s !important;
 }
 
 .test-author-thumb {
@@ -1422,18 +1422,22 @@ CONTACT PAGE
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
   }
-  .dropdown-item + .dropdown-item {
+
+  .dropdown-item+.dropdown-item {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
+
   .navbar .dropdown-menu {
     -webkit-transform: translateY(0.5rem);
     transform: translateY(0.5rem);
     opacity: 0;
   }
+
   .navbar .dropdown-menu.show {
     -webkit-animation: 0.2s forwards d;
     animation: 0.2s forwards d;
   }
+
   @-webkit-keyframes d {
     to {
       -webkit-transform: translateY(0);
@@ -1441,6 +1445,7 @@ CONTACT PAGE
       opacity: 1;
     }
   }
+
   @keyframes d {
     to {
       -webkit-transform: translateY(0);
@@ -1448,11 +1453,13 @@ CONTACT PAGE
       opacity: 1;
     }
   }
+
   .navbar .dropdown-menu {
     padding-top: 0;
     padding-bottom: 0;
     border: 0;
   }
+
   .navbar .nav-item-divider {
     display: block;
   }
@@ -1465,50 +1472,64 @@ CONTACT PAGE
   .section-title {
     font-size: 30px;
   }
+
   .background-text {
     font-size: 60px;
   }
+
   .main-banner h1.display-4 {
     line-height: 62px;
     font-size: 30px;
   }
+
   .main-nav .navbar-brand h4 {
     color: #fff;
   }
+
   .top-info-block {
     text-align: center;
     margin: 10px 0px;
     clear: both;
   }
+
   .icon-block {
     margin-right: 0px;
     margin-bottom: 10px;
   }
+
   .main-navigation {
     margin-top: 20px;
   }
+
   .main-nav .navbar-brand h4 {
     color: #fff;
   }
+
   .section-title {
     font-size: 22px;
   }
+
   .feature-block {
     margin-bottom: 80px;
   }
+
   .service-img {
     margin-bottom: 0px;
   }
+
   .service-content {
     padding-bottom: 70px;
   }
+
   .process-block,
   .pricing-block {
     margin-bottom: 40px;
   }
+
   .section-heading {
     margin-bottom: 30px;
   }
+
   .project-content-block {
     text-align: center;
     margin-left: 0px;
@@ -1517,45 +1538,58 @@ CONTACT PAGE
     bottom: 0px;
     margin-top: 40px;
   }
+
   .project-content-block h4 {
     font-size: 14px;
   }
+
   .blog-box {
     margin-bottom: 50px;
   }
+
   .footer-copy {
     text-align: center;
   }
+
   .footer-copy:before {
     display: none;
   }
+
   .banner-content p {
     padding-right: 0px;
   }
+
   .pricing-box {
     margin-top: 30px;
   }
+
   .main-navigation.menu-2 {
     margin-top: 20px;
     position: absolute;
     width: 100%;
   }
+
   .top-info-block {
     margin: 0px 20px;
     text-align: left;
   }
+
   .top-info-block .icon-block {
     margin-right: 10px;
   }
+
   .img-icon-block:before {
     right: auto;
   }
+
   #map {
     margin-top: 40px;
   }
+
   .contact-info-block {
     margin-bottom: 25px;
   }
+
   #work-wrap p.lead {
     margin-bottom: 40px;
   }
@@ -1568,43 +1602,55 @@ CONTACT PAGE
   .display-4 {
     font-size: 2.5rem;
   }
+
   .top-info-block {
     margin: 10px 15px;
     clear: both;
   }
+
   .icon-block {
     margin-right: 0px;
     margin-bottom: 10px;
   }
+
   .main-navigation {
     margin-top: 20px;
   }
+
   .main-nav .navbar-brand h4 {
     color: #fff;
   }
+
   .section-title {
     font-size: 22px;
   }
+
   .feature-block {
     margin-bottom: 80px;
   }
+
   .service-img {
     margin-bottom: 0px;
   }
+
   .service-content {
     padding-bottom: 70px;
   }
+
   .process-block,
   .pricing-block {
     margin-bottom: 40px;
   }
+
   .pricing-block.zoom-in {
     -webkit-transform: none;
     transform: none;
   }
+
   .section-heading {
     margin-bottom: 30px;
   }
+
   .project-content-block {
     text-align: center;
     margin-left: 0px;
@@ -1613,52 +1659,67 @@ CONTACT PAGE
     bottom: 0px;
     margin-top: 40px;
   }
+
   .project-content-block h4 {
     font-size: 14px;
   }
+
   .testimonial-heading {
     margin-bottom: 50px;
   }
+
   .blog-box {
     margin-bottom: 50px;
   }
+
   .footer-copy {
     text-align: center;
   }
+
   .footer-copy:before {
     display: none;
   }
+
   .banner-content p {
     padding-right: 0px;
   }
+
   .pricing-box {
     margin-top: 30px;
   }
+
   .main-navigation.menu-2 {
     margin-top: 20px;
     position: absolute;
     width: 100%;
   }
+
   .img-icon-block:before {
     right: auto;
   }
+
   .page-banner-area {
     padding: 160px 0px 110px;
   }
+
   .info-block-2 {
     margin-right: 35px;
     margin-bottom: 40px;
   }
+
   .navbar-collapse.collapse.show {
     padding-bottom: 30px;
     background: #00a884;
   }
+
   #map {
     margin-top: 40px;
   }
+
   .contact-info-block {
     margin-bottom: 25px;
   }
+
   #work-wrap p.lead {
     margin-bottom: 40px;
   }
@@ -1669,60 +1730,77 @@ CONTACT PAGE
   .main-navigation {
     margin-top: 40px;
   }
+
   a.navbar-brand h4 {
     color: #fff;
   }
+
   .section-title {
     top: 0;
   }
+
   .background-text {
     display: none;
   }
+
   .display-4 {
     font-size: 2.5rem;
   }
+
   .navbar-collapse.collapse.show {
     padding-bottom: 30px;
     background: #00a884;
   }
+
   .top-info-block {
     text-align: center;
     margin: 10px 0px;
     clear: both;
   }
+
   .icon-block {
     margin-right: 0px;
     margin-bottom: 10px;
   }
+
   .main-navigation {
     margin-top: 20px;
   }
+
   .main-nav .navbar-brand h4 {
     color: #fff;
   }
+
   .section-title {
     font-size: 22px;
   }
+
   .feature-block {
     margin-bottom: 80px;
   }
+
   .service-img {
     margin-bottom: 0px;
   }
+
   .service-content {
     padding-bottom: 70px;
   }
+
   .process-block,
   .pricing-block {
     margin-bottom: 40px;
   }
+
   .pricing-block.zoom-in {
     -webkit-transform: none;
     transform: none;
   }
+
   .section-heading {
     margin-bottom: 30px;
   }
+
   .project-content-block {
     text-align: center;
     margin-left: 0px;
@@ -1730,83 +1808,107 @@ CONTACT PAGE
     position: relative;
     bottom: 0px;
   }
+
   .project-content-block h4 {
     font-size: 14px;
   }
+
   .testimonial-heading {
     margin-bottom: 50px;
   }
+
   .blog-box {
     margin-bottom: 50px;
   }
+
   .footer-copy {
     text-align: center;
   }
+
   .footer-copy:before {
     display: none;
   }
+
   .project-content {
     text-align: center;
     padding: 50px 0px;
     position: relative;
   }
+
   .about-block {
     margin-top: 30px;
   }
+
   .banner-content p {
     padding-right: 0px;
   }
+
   .pricing-box {
     margin-top: 30px;
   }
+
   .main-navigation.menu-2 {
     margin-top: 20px;
     position: absolute;
     width: 100%;
   }
+
   .banner-content p {
     padding-right: 0px;
   }
+
   .pricing-box {
     margin-top: 30px;
   }
+
   .main-navigation.menu-2 {
     margin-top: 20px;
     position: absolute;
     width: 100%;
   }
+
   .banner-contact-form {
     padding: 45px 15px;
   }
+
   .web-service-block {
     margin-bottom: 30px;
   }
+
   .img-icon-block:before {
     right: auto;
   }
+
   #feature {
     padding-bottom: 0px;
   }
+
   .page-banner-area {
     padding: 160px 0px 110px;
   }
+
   #pricing-2 {
     padding-left: 20px;
     padding-right: 20px;
   }
+
   .info-block-2 {
     margin-right: 35px;
     margin-bottom: 40px;
   }
+
   #map {
     margin-top: 40px;
   }
+
   .contact-info-block {
     margin-bottom: 25px;
   }
+
   #work-wrap p.lead {
     margin-bottom: 40px;
   }
+
   .navbar-toggler:focus {
     outline: none;
   }
@@ -1817,54 +1919,69 @@ CONTACT PAGE
   .bg-light {
     background: transparent !important;
   }
+
   .main-navigation {
     margin-top: 40px;
   }
+
   a.navbar-brand h4 {
     color: #fff;
   }
+
   .top-info-block {
     text-align: center;
     margin: 10px 0px;
     clear: both;
   }
+
   .icon-block {
     margin-right: 0px;
     margin-bottom: 10px;
   }
+
   .main-navigation {
     margin-top: 20px;
   }
+
   .main-nav .navbar-brand h4 {
     color: #fff;
     margin-top: 10px;
   }
+
   .section-title {
     font-size: 22px;
   }
+
   .banner-contact-form {
     padding: 45px 15px !important;
   }
+
   .feature-block {
     margin-bottom: 80px;
   }
+
   .service-img {
     margin-bottom: 0px;
   }
+
   .service-content {
     padding-bottom: 70px;
   }
+
   .process-block,
   .pricing-block {
     margin-bottom: 40px;
   }
+
   .pricing-block.zoom-in {
     -webkit-transform: none;
     transform: none;
   }
+
   .section-heading {
     margin-bottom: 30px;
   }
+
   .project-content-block {
     text-align: center;
     margin-left: 0px;
@@ -1873,87 +1990,113 @@ CONTACT PAGE
     bottom: 0px;
     margin-top: 30px;
   }
+
   .project-content-block h4 {
     font-size: 14px;
   }
+
   .testimonial-heading {
     margin-bottom: 50px;
   }
+
   .blog-box {
     margin-bottom: 50px;
   }
+
   .footer-copy {
     text-align: center;
   }
+
   .footer-copy:before {
     display: none;
   }
+
   .about-block {
     margin-top: 30px;
   }
+
   .banner-content .display-4 {
     font-size: 28px;
     line-height: 38px;
   }
+
   .banner-content p {
     padding-right: 0px;
   }
+
   .pricing-box {
     margin-top: 30px;
   }
+
   .main-navigation.menu-2 {
     margin-top: 20px;
     position: absolute;
     width: 100%;
   }
+
   .navbar-collapse.collapse.show {
     padding-bottom: 30px;
     background: #00a884;
   }
+
   .web-service-block {
     margin-bottom: 30px;
   }
+
   .section {
     padding: 60px 0px;
   }
+
   .section-bottom {
     padding-bottom: 60px;
   }
+
   .section-top {
     padding-top: 60px;
   }
+
   .main-banner h1.display-4 {
     line-height: 42px;
     font-size: 30px;
   }
+
   #projects {
     margin-top: 60px;
   }
+
   .img-icon-block:before {
     right: auto;
   }
+
   #feature {
     padding-bottom: 0px;
   }
+
   .page-banner-area {
     padding: 160px 0px 110px;
   }
+
   .display-4 {
     font-size: 30px;
   }
+
   .info-block-2 {
     margin-right: 35px;
     margin-bottom: 40px;
   }
+
   #map {
     margin-top: 40px;
   }
+
   .contact-info-block {
     margin-bottom: 25px;
   }
+
   #work-wrap p.lead {
     margin-bottom: 40px;
   }
+
   .navbar-toggler:focus {
     outline: none;
   }

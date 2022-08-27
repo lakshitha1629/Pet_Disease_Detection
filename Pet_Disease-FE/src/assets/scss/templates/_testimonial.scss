@@ -19,16 +19,18 @@ SECTION TESTIMONIAL
   -webkit-transition: all .7s ease;
   -o-transition: all .7s ease;
   transition: all .7s ease;
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.05);
 
   &:hover {
     -webkit-box-shadow: 0 7px 22px rgba(0, 0, 0, 0.08);
     box-shadow: 0 7px 22px rgba(0, 0, 0, 0.08);
   }
 
-  &:active {
+  &.active {
     color: #fafafa !important;
-    border: 5px solid #00a884 !important;
-    transition: color 0.35s ease 0s;
+    border: 2px solid #00a884 !important;
+    background-color: #fafafa !important;
+    transition: color 0.35s ease 0s !important;
   }
 
   i {

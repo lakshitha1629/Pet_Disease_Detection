@@ -12,11 +12,11 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-detect-disorder',
-  templateUrl: './detect-disorder.component.html',
-  styleUrls: ['./detect-disorder.component.scss']
+  selector: 'app-health-supporter',
+  templateUrl: './health-supporter.component.html',
+  styleUrls: ['./health-supporter.component.scss']
 })
-export class DetectDisorderComponent implements OnInit {
+export class HealthSupporterComponent implements OnInit {
   openCVLoadResult: Observable<OpenCVLoadResult>;
   uploaderItems$: Observable<Uploader[]>;
   uploaderItemsLength: number;
@@ -34,6 +34,15 @@ export class DetectDisorderComponent implements OnInit {
   imageUploadBoolean: number = 0;
   selectedDiseaseFeline: any[] = [];
   selectedDiseaseCanine: any[] = [];
+  selectedPetCategory: number = 0;
+  selectedPetCategoryName: string = 'feline';
+
+  resultList : any[] = [
+    { id: 1, name: 'Abdominal bloating' },
+    { id: 2, name: 'Abdominal pain' },
+    { id: 3, name: 'Acne' },
+    { id: 4, name: 'Aggression' }
+  ];
 
   diseasesFeline = [
     { id: 1, name: 'Abdominal bloating' },
@@ -115,55 +124,55 @@ export class DetectDisorderComponent implements OnInit {
   ];
 
   diseasesCanine = [
-    { id: 1, name: 'Aggression'},
-    { id: 2, name: 'Ascites (Swelling of abdomen)'},
-    { id: 3, name: 'Bleeding disorders'},
-    { id: 4, name: 'Blood in urine'},
-    { id: 5, name: 'Coma'},
-    { id: 6, name: 'Crusty lesions on the skin (Nose, Face, or Ears)'},
-    { id: 7, name: 'Crying out while urinating'},
-    { id: 8, name: 'Depression'},
-    { id: 9, name: 'Drooling'},
-    { id: 10, name: 'Diarrhea'},
-    { id: 11, name: 'Difficulty breathing'},
-    { id: 12, name: 'Distress'},
-    { id: 13, name: 'Emaciation'},
-    { id: 14, name: 'Excessive drooling'},
-    { id: 15, name: 'Excessive licking of genital areas'},
-    { id: 16, name: 'Failure to thrive'},
-    { id: 17, name: 'Fever'},
-    { id: 18, name: 'Flaky skin'},
-    { id: 19, name: 'Foaming at mouth'},
-    { id: 20, name: 'Frequent attempts to urinate'},
-    { id: 21, name: 'Frequent urination'},
-    { id: 22, name: 'Hairless patches'},
-    { id: 23, name: 'Hair loss'},
-    { id: 24, name: 'Increased thrist'},
-    { id: 25, name: 'Inflamed skin'},
-    { id: 26, name: 'Intestinal blockages'},
-    { id: 27, name: 'Intestinal compliations'},
-    { id: 28, name: 'Irritated skin'},
-    { id: 29, name: 'Itchiness'},
-    { id: 30, name: 'Lethargy'},
-    { id: 31, name: 'Loss of appetite'},
-    { id: 32, name: 'Loss of muscle control'},
-    { id: 33, name: 'Paralysis of hind legs'},
-    { id: 34, name: 'Prolonged attempts to urinate'},
-    { id: 35, name: 'Red skin'},
-    { id: 36, name: 'Ring-like lesions on the skin'},
-    { id: 37, name: 'Seizures'},
-    { id: 38, name: 'Shaggy coat'},
-    { id: 39, name: 'Straining to urinate'},
-    { id: 40, name: 'Sudden death'},
-    { id: 41, name: 'Tapeworms in feces'},
-    { id: 42, name: 'Urinating small amounts'},
-    { id: 43, name: 'Urinating outside the litter box'},
-    { id: 44, name: 'Vomiting'},
-    { id: 45, name: 'Weakness'},
-    { id: 46, name: 'Weight loss'},
-    { id: 47, name: 'Yellow eyes'},
-    { id: 48, name: 'Yellow gums'},
-    { id: 49, name: 'Yellow skin'},
+    { id: 1, name: 'Aggression' },
+    { id: 2, name: 'Ascites (Swelling of abdomen)' },
+    { id: 3, name: 'Bleeding disorders' },
+    { id: 4, name: 'Blood in urine' },
+    { id: 5, name: 'Coma' },
+    { id: 6, name: 'Crusty lesions on the skin (Nose, Face, or Ears)' },
+    { id: 7, name: 'Crying out while urinating' },
+    { id: 8, name: 'Depression' },
+    { id: 9, name: 'Drooling' },
+    { id: 10, name: 'Diarrhea' },
+    { id: 11, name: 'Difficulty breathing' },
+    { id: 12, name: 'Distress' },
+    { id: 13, name: 'Emaciation' },
+    { id: 14, name: 'Excessive drooling' },
+    { id: 15, name: 'Excessive licking of genital areas' },
+    { id: 16, name: 'Failure to thrive' },
+    { id: 17, name: 'Fever' },
+    { id: 18, name: 'Flaky skin' },
+    { id: 19, name: 'Foaming at mouth' },
+    { id: 20, name: 'Frequent attempts to urinate' },
+    { id: 21, name: 'Frequent urination' },
+    { id: 22, name: 'Hairless patches' },
+    { id: 23, name: 'Hair loss' },
+    { id: 24, name: 'Increased thrist' },
+    { id: 25, name: 'Inflamed skin' },
+    { id: 26, name: 'Intestinal blockages' },
+    { id: 27, name: 'Intestinal compliations' },
+    { id: 28, name: 'Irritated skin' },
+    { id: 29, name: 'Itchiness' },
+    { id: 30, name: 'Lethargy' },
+    { id: 31, name: 'Loss of appetite' },
+    { id: 32, name: 'Loss of muscle control' },
+    { id: 33, name: 'Paralysis of hind legs' },
+    { id: 34, name: 'Prolonged attempts to urinate' },
+    { id: 35, name: 'Red skin' },
+    { id: 36, name: 'Ring-like lesions on the skin' },
+    { id: 37, name: 'Seizures' },
+    { id: 38, name: 'Shaggy coat' },
+    { id: 39, name: 'Straining to urinate' },
+    { id: 40, name: 'Sudden death' },
+    { id: 41, name: 'Tapeworms in feces' },
+    { id: 42, name: 'Urinating small amounts' },
+    { id: 43, name: 'Urinating outside the litter box' },
+    { id: 44, name: 'Vomiting' },
+    { id: 45, name: 'Weakness' },
+    { id: 46, name: 'Weight loss' },
+    { id: 47, name: 'Yellow eyes' },
+    { id: 48, name: 'Yellow gums' },
+    { id: 49, name: 'Yellow skin' },
   ];
 
   @ViewChild('fileInput')
@@ -343,6 +352,16 @@ export class DetectDisorderComponent implements OnInit {
 
   clearDiseaseCanine() {
     this.selectedDiseaseCanine = [];
+  }
+
+  onSavePetCategory(value: number) {
+    this.selectedPetCategory = value;
+    if (this.selectedPetCategory == 1) {
+      this.selectedPetCategoryName = 'canine';
+    } else {
+      this.selectedPetCategoryName = 'feline';
+    }
+
   }
 
 }

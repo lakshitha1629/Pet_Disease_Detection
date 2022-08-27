@@ -22,6 +22,8 @@ import { ImageUploaderModule } from 'ngx-image-uploader-next';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgOpenCVModule, OpenCVOptions } from "ng-open-cv";
 import { CommonModule } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { HealthSupporterComponent } from './features/health-supporter/health-supporter.component';
 
 const openCVConfig: OpenCVOptions = {
   scriptUrl: `assets/opencv/opencv.js`,
@@ -38,7 +40,8 @@ const openCVConfig: OpenCVOptions = {
     AboutComponent,
     TopBarComponent,
     BannerComponent,
-    DetectDisorderComponent
+    DetectDisorderComponent,
+    HealthSupporterComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ const openCVConfig: OpenCVOptions = {
     ImageUploaderModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
-    CommonModule
+    CommonModule,
+    NgSelectModule
   ],
   exports: [BrowserModule, NgOpenCVModule],
   providers: [{ provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: environment.apiUrl } }],
