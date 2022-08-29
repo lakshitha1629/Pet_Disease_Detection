@@ -2,7 +2,8 @@ from flask import Flask, request, redirect
 from flask_restful import Resource, Api
 from flask_cors import CORS
 import os
-import prediction
+# import prediction
+import dataPrediction as prediction
 from imageProcessing import detectionOutput
 
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg']
@@ -67,10 +68,11 @@ class GetPredictionOutput(Resource):
     def post(self):
         try:
             data = request.get_json()
-            # print(data)
-            predict = prediction.predict_mpg(data)
-            predictOutput = predict[0]
-            return {'predict':predictOutput}
+            predictData = []
+            for x in data:
+                predictData.append(x["name"])
+            predict = prediction.predict_mpg(predictData)
+            return {'predict':predict}
 
         except Exception as error:
             return {'error': error}
