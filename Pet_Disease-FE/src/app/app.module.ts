@@ -17,7 +17,6 @@ import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { HttpClientModule } from '@angular/common/http';
-import { DetectDisorderComponent } from './features/detect-disorder/detect-disorder.component';
 import { ImageUploaderModule } from 'ngx-image-uploader-next';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgOpenCVModule, OpenCVOptions } from "ng-open-cv";
@@ -40,7 +39,6 @@ const openCVConfig: OpenCVOptions = {
     AboutComponent,
     TopBarComponent,
     BannerComponent,
-    DetectDisorderComponent,
     HealthSupporterComponent
   ],
   imports: [

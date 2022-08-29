@@ -81,7 +81,7 @@
                 </div>
               </div>
               <div class="col-12 text-right">
-                <button class="btn-new btn-primary" [disabled]="active === 3" (click)="nav.select(3)">
+                <button class="btn-new btn-primary" [disabled]="active === 3" (click)="getPredictionOutput()">
                   Next <i class="fa fa-arrow-right"></i>
                 </button>
 
@@ -128,7 +128,7 @@
                   <label class="btn btn-default">
                     <input type="file" multiple (change)="selectFiles($event)" accept="image/*" />
                   </label>
-                  <div *ngIf="active == 1">
+                  <div *ngIf="active == 3">
                     <button class="btn-new btn-dark" [disabled]="!selectedFiles" (click)="uploadFiles()">
                       Image Analysis
                     </button>
@@ -159,22 +159,12 @@
                     <canvas #canvas id="canvas" width="750" height="500"
                       style="border: 1px solid mediumspringgreen;width: inherit;"></canvas>
                   </div>
+
                   <div class="col-6 text-justify output-box">
                     <h4 class="text-center">OpenCV data analysis</h4>
-                    <table class="table">
-                      <tr>
-                        <td>Disease Percentage</td>
-                        <td>{{ diseasePercentage }}</td>
-                      </tr>
-                      <tr>
-                        <td>White Dots Count</td>
-                        <td>{{ whiteDotsCount }}</td>
-                      </tr>
-                      <tr>
-                        <td>Yellow Dots Count</td>
-                        <td>{{ yellowDotsCount }}</td>
-                      </tr>
-                    </table>
+                    <hr>
+                    <h6 class="text-center">Disease Percentage</h6>
+                    <h6 class="text-center">{{ diseasePercentage }}</h6>
                   </div>
                   <div class="col-12 text-right">
                     <button class="btn-new btn-primary" [disabled]="active === 1" (click)="nav.select(4)">

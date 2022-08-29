@@ -14,7 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-health-supporter',
   templateUrl: './health-supporter.component.html',
-  styleUrls: ['./health-supporter.component.scss']
+  styleUrls: ['./health-supporter.component.scss'],
 })
 export class HealthSupporterComponent implements OnInit {
   openCVLoadResult: Observable<OpenCVLoadResult>;
@@ -37,11 +37,11 @@ export class HealthSupporterComponent implements OnInit {
   selectedPetCategory: number = 0;
   selectedPetCategoryName: string = 'feline';
 
-  resultList : any[] = [
+  resultList: any[] = [
     { id: 1, name: 'Abdominal bloating' },
     { id: 2, name: 'Abdominal pain' },
     { id: 3, name: 'Acne' },
-    { id: 4, name: 'Aggression' }
+    { id: 4, name: 'Aggression' },
   ];
 
   diseasesFeline = [
@@ -200,15 +200,17 @@ export class HealthSupporterComponent implements OnInit {
     Q17: new FormControl(''),
     Q18: new FormControl(''),
     Q19: new FormControl(''),
-    Q20: new FormControl('')
+    Q20: new FormControl(''),
   });
 
-  constructor(private projectDataService: ProjectDataService,
+  constructor(
+    private projectDataService: ProjectDataService,
     private ngOpenCVService: NgOpenCVService,
     private uploadService: UploaderDataService,
     private uploaderService: UploaderService,
     private router: Router,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.openCVLoadResult = this.ngOpenCVService.isReady$;
@@ -226,11 +228,18 @@ export class HealthSupporterComponent implements OnInit {
       load$
         .pipe(
           switchMap(() => {
-            return this.ngOpenCVService.loadImageToHTMLCanvas(`${reader.result}`, this.canvas.nativeElement);
-          })).subscribe(() => { },
-            err => {
-              console.log('Error loading image', err);
-            });
+            return this.ngOpenCVService.loadImageToHTMLCanvas(
+              `${reader.result}`,
+              this.canvas.nativeElement
+            );
+          })
+        )
+        .subscribe(
+          () => {},
+          (err) => {
+            console.log('Error loading image', err);
+          }
+        );
 
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = (e: any) => {
@@ -242,11 +251,11 @@ export class HealthSupporterComponent implements OnInit {
           let dst = new cv.Mat();
           let dsize = new cv.Size(1000, 750);
           cv.resize(srcImg, dst, dsize, 0, 0, cv.INTER_AREA);
-          cv.imshow("canvas", dst);
+          cv.imshow('canvas', dst);
           // srcImg.delete();
           // dst.delete();
         };
-      }
+      };
       const canvas = <HTMLCanvasElement>document.getElementById('canvas');
     }
     this.progressInfos = [];
@@ -265,9 +274,10 @@ export class HealthSupporterComponent implements OnInit {
     this.spinner.show();
     this.uploadService.upload(file).subscribe(
       (res: HttpEvent<any>) => {
-
         if (res.type === HttpEventType.UploadProgress) {
-          this.progressInfos[idx].value = Math.round(100 * res.loaded / res.total);
+          this.progressInfos[idx].value = Math.round(
+            (100 * res.loaded) / res.total
+          );
         }
         if (res.type === HttpEventType.Response) {
           console.log('Upload complete');
@@ -275,16 +285,15 @@ export class HealthSupporterComponent implements OnInit {
           this.diseasePercentage = res.body.diseasePercentage;
           this.whiteDotsCount = res.body.whiteDotsCount;
           this.yellowDotsCount = res.body.yellowDotsCount;
-          this.active = 1;
+          this.active = 3;
           this.imageUploadBoolean = 1;
           this.spinner.hide();
           this.uploaderService.addUploaderItem({
             id: 1,
             diseasePercentage: this.diseasePercentage,
             whiteDotsCount: this.whiteDotsCount,
-            yellowDotsCount: this.yellowDotsCount
+            yellowDotsCount: this.yellowDotsCount,
           } as Uploader);
-
         }
       },
       (error) => {
@@ -292,52 +301,66 @@ export class HealthSupporterComponent implements OnInit {
         this.message = 'Could not upload the file:' + file.name;
         console.log(error);
       }
-    )
+    );
   }
 
   resetProject() {
     this.uploaderService.deleteUploaderItem(1);
-    console.log("Clear Uploader DB");
+    console.log('Clear Uploader DB');
+  }
+
+  getPredictionOutput() {
+    console.log(JSON.stringify(this.selectedDiseaseFeline))
+    if (this.selectedPetCategoryName == 'feline') {
+      this.spinner.show();
+      this.projectDataService
+        .getPrediction(JSON.stringify(this.selectedDiseaseFeline))
+        .subscribe((res) => {
+          this.spinner.hide();
+          console.log(res);
+          this.Output = res.predict;
+          console.log('Succefully Added');
+          this.formGroup.reset();
+        });
+    } else {
+      this.spinner.show();
+      this.projectDataService
+        .getPrediction(JSON.stringify(this.selectedDiseaseCanine))
+        .subscribe((res) => {
+          this.spinner.hide();
+          console.log(res);
+          this.Output = res.predict;
+          console.log('Succefully Added');
+          this.formGroup.reset();
+        });
+    }
+
+    this.active = 3;
   }
 
   onSubmit() {
-    const data =
-    {
-      Q1: [(this.formGroup.controls.Q1.value == true) ? 1 : 0],
-      Q2: [(this.formGroup.controls.Q2.value == true) ? 1 : 0],
-      Q3: [(this.formGroup.controls.Q3.value == true) ? 1 : 0],
-      Q4: [(this.formGroup.controls.Q4.value == true) ? 1 : 0],
-      Q5: [(this.formGroup.controls.Q5.value == true) ? 1 : 0],
-      Q6: [(this.formGroup.controls.Q6.value == true) ? 1 : 0],
-      Q7: [(this.formGroup.controls.Q7.value == true) ? 1 : 0],
-      Q8: [(this.formGroup.controls.Q8.value == true) ? 1 : 0],
-      Q9: [(this.formGroup.controls.Q9.value == true) ? 1 : 0],
-      Q10: [(this.formGroup.controls.Q10.value == true) ? 1 : 0],
-      Q11: [(this.formGroup.controls.Q11.value == true) ? 1 : 0],
-      Q12: [(this.formGroup.controls.Q12.value == true) ? 1 : 0],
-      Q13: [(this.formGroup.controls.Q13.value == true) ? 1 : 0],
-      Q14: [(this.formGroup.controls.Q14.value == true) ? 1 : 0],
-      Q15: [(this.formGroup.controls.Q15.value == true) ? 1 : 0],
-      Q16: [(this.formGroup.controls.Q16.value == true) ? 1 : 0],
-      Q17: [(this.formGroup.controls.Q17.value == true) ? 1 : 0],
-      Q18: [(this.formGroup.controls.Q18.value == true) ? 1 : 0],
-      Q19: [(this.formGroup.controls.Q19.value == true) ? 1 : 0],
-      Q20: [(this.formGroup.controls.Q20.value == true) ? 1 : 0]
-    }
-
-    if (this.formGroup.valid == true) {
-      this.spinner.show();
-      this.projectDataService.getPrediction(data).subscribe(res => {
-        this.spinner.hide();
-        console.log(res);
-        this.Output = res.predict;
-        console.log('Succefully Added');
-        this.formGroup.reset();
-      });
-    }
-    else {
-      console.log('Something wrong');
-    }
+    const data = {
+      Q1: [this.formGroup.controls.Q1.value == true ? 1 : 0],
+      Q2: [this.formGroup.controls.Q2.value == true ? 1 : 0],
+      Q3: [this.formGroup.controls.Q3.value == true ? 1 : 0],
+      Q4: [this.formGroup.controls.Q4.value == true ? 1 : 0],
+      Q5: [this.formGroup.controls.Q5.value == true ? 1 : 0],
+      Q6: [this.formGroup.controls.Q6.value == true ? 1 : 0],
+      Q7: [this.formGroup.controls.Q7.value == true ? 1 : 0],
+      Q8: [this.formGroup.controls.Q8.value == true ? 1 : 0],
+      Q9: [this.formGroup.controls.Q9.value == true ? 1 : 0],
+      Q10: [this.formGroup.controls.Q10.value == true ? 1 : 0],
+      Q11: [this.formGroup.controls.Q11.value == true ? 1 : 0],
+      Q12: [this.formGroup.controls.Q12.value == true ? 1 : 0],
+      Q13: [this.formGroup.controls.Q13.value == true ? 1 : 0],
+      Q14: [this.formGroup.controls.Q14.value == true ? 1 : 0],
+      Q15: [this.formGroup.controls.Q15.value == true ? 1 : 0],
+      Q16: [this.formGroup.controls.Q16.value == true ? 1 : 0],
+      Q17: [this.formGroup.controls.Q17.value == true ? 1 : 0],
+      Q18: [this.formGroup.controls.Q18.value == true ? 1 : 0],
+      Q19: [this.formGroup.controls.Q19.value == true ? 1 : 0],
+      Q20: [this.formGroup.controls.Q20.value == true ? 1 : 0],
+    };
 
   }
 
@@ -348,7 +371,6 @@ export class HealthSupporterComponent implements OnInit {
   clearDiseaseFeline() {
     this.selectedDiseaseFeline = [];
   }
-
 
   clearDiseaseCanine() {
     this.selectedDiseaseCanine = [];
@@ -361,8 +383,5 @@ export class HealthSupporterComponent implements OnInit {
     } else {
       this.selectedPetCategoryName = 'feline';
     }
-
   }
-
 }
-
