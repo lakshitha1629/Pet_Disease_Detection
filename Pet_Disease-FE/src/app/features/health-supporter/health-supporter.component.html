@@ -19,8 +19,8 @@
                       (click)="onSavePetCategory(0)">
                       <div class="test-author-thumb d-flex">
                         <img
-                        src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                        alt="Testimonial author" class="img-fluid">
+                          src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                          alt="Testimonial author" class="img-fluid">
                         <div class="test-author-info">
                           <h3>Feline (Cat)</h3>
                         </div>
@@ -182,15 +182,32 @@
         <li [ngbNavItem]="4" [disabled]="active === 1 || active === 2 || active === 3">
           <a ngbNavLink>Final Result</a>
           <ng-template ngbNavContent>
-            <div class="row justify-content-md-center">
-              <h4>Predicted Disease</h4>
-
+            <div class="alert alert-danger" role="alert" *ngIf="resultList?.length > 1">
+              If there are more than one predicted diseases in the list below, please contact a veterinary surgeon to get further medical assistance for your pet.
             </div>
             <div class="row justify-content-md-center">
+              <h4>Predicted Disease</h4>
+            </div>
+            <div class="row">
               <div>
-                <ul class="item-list badge badge-warning"  style="font-size: 24px">
-                  <li *ngFor="let item of resultList">{{item.name}}</li>
-                </ul>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Disease</th>
+                      <th scope="col">Symptoms</th>
+                      <th scope="col">Treatment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of resultList">
+                      <th scope="row">*</th>
+                      <td>{{getTableData(item)[0].name}}</td>
+                      <td>{{getTableData(item)[0].symptoms}}</td>
+                      <td>{{getTableData(item)[0].treatment}}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </ng-template>

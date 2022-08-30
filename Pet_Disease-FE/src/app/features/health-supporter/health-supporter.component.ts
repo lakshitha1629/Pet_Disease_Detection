@@ -37,12 +37,7 @@ export class HealthSupporterComponent implements OnInit {
   selectedPetCategory: number = 0;
   selectedPetCategoryName: string = 'feline';
 
-  resultList: any[] = [
-    { id: 1, name: 'Abdominal bloating' },
-    { id: 2, name: 'Abdominal pain' },
-    { id: 3, name: 'Acne' },
-    { id: 4, name: 'Aggression' },
-  ];
+  resultList: any[] = [];
 
   diseasesFeline = [
     { id: 1, name: 'Abdominal bloating' },
@@ -180,29 +175,6 @@ export class HealthSupporterComponent implements OnInit {
   @ViewChild('canvas')
   canvas: ElementRef;
 
-  formGroup: FormGroup = new FormGroup({
-    Q1: new FormControl(''),
-    Q2: new FormControl(''),
-    Q3: new FormControl(''),
-    Q4: new FormControl(''),
-    Q5: new FormControl(''),
-    Q6: new FormControl(''),
-    Q7: new FormControl(''),
-    Q8: new FormControl(''),
-    Q9: new FormControl(''),
-    Q10: new FormControl(''),
-    Q11: new FormControl(''),
-    Q12: new FormControl(''),
-    Q13: new FormControl(''),
-    Q14: new FormControl(''),
-    Q15: new FormControl(''),
-    Q16: new FormControl(''),
-    Q17: new FormControl(''),
-    Q18: new FormControl(''),
-    Q19: new FormControl(''),
-    Q20: new FormControl(''),
-  });
-
   constructor(
     private projectDataService: ProjectDataService,
     private ngOpenCVService: NgOpenCVService,
@@ -210,7 +182,7 @@ export class HealthSupporterComponent implements OnInit {
     private uploaderService: UploaderService,
     private router: Router,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.openCVLoadResult = this.ngOpenCVService.isReady$;
@@ -235,7 +207,7 @@ export class HealthSupporterComponent implements OnInit {
           })
         )
         .subscribe(
-          () => {},
+          () => { },
           (err) => {
             console.log('Error loading image', err);
           }
@@ -310,58 +282,29 @@ export class HealthSupporterComponent implements OnInit {
   }
 
   getPredictionOutput() {
-    console.log(JSON.stringify(this.selectedDiseaseFeline))
     if (this.selectedPetCategoryName == 'feline') {
       this.spinner.show();
       this.projectDataService
-        .getPrediction(JSON.stringify(this.selectedDiseaseFeline))
+        .getPrediction(this.selectedDiseaseFeline)
         .subscribe((res) => {
           this.spinner.hide();
           console.log(res);
-          this.Output = res.predict;
+          this.resultList = res.predict;
           console.log('Succefully Added');
-          this.formGroup.reset();
         });
     } else {
       this.spinner.show();
       this.projectDataService
-        .getPrediction(JSON.stringify(this.selectedDiseaseCanine))
+        .getPrediction(this.selectedDiseaseCanine)
         .subscribe((res) => {
           this.spinner.hide();
           console.log(res);
-          this.Output = res.predict;
+          this.resultList = res.predict;
           console.log('Succefully Added');
-          this.formGroup.reset();
         });
     }
 
     this.active = 3;
-  }
-
-  onSubmit() {
-    const data = {
-      Q1: [this.formGroup.controls.Q1.value == true ? 1 : 0],
-      Q2: [this.formGroup.controls.Q2.value == true ? 1 : 0],
-      Q3: [this.formGroup.controls.Q3.value == true ? 1 : 0],
-      Q4: [this.formGroup.controls.Q4.value == true ? 1 : 0],
-      Q5: [this.formGroup.controls.Q5.value == true ? 1 : 0],
-      Q6: [this.formGroup.controls.Q6.value == true ? 1 : 0],
-      Q7: [this.formGroup.controls.Q7.value == true ? 1 : 0],
-      Q8: [this.formGroup.controls.Q8.value == true ? 1 : 0],
-      Q9: [this.formGroup.controls.Q9.value == true ? 1 : 0],
-      Q10: [this.formGroup.controls.Q10.value == true ? 1 : 0],
-      Q11: [this.formGroup.controls.Q11.value == true ? 1 : 0],
-      Q12: [this.formGroup.controls.Q12.value == true ? 1 : 0],
-      Q13: [this.formGroup.controls.Q13.value == true ? 1 : 0],
-      Q14: [this.formGroup.controls.Q14.value == true ? 1 : 0],
-      Q15: [this.formGroup.controls.Q15.value == true ? 1 : 0],
-      Q16: [this.formGroup.controls.Q16.value == true ? 1 : 0],
-      Q17: [this.formGroup.controls.Q17.value == true ? 1 : 0],
-      Q18: [this.formGroup.controls.Q18.value == true ? 1 : 0],
-      Q19: [this.formGroup.controls.Q19.value == true ? 1 : 0],
-      Q20: [this.formGroup.controls.Q20.value == true ? 1 : 0],
-    };
-
   }
 
   reset() {
@@ -383,5 +326,123 @@ export class HealthSupporterComponent implements OnInit {
     } else {
       this.selectedPetCategoryName = 'feline';
     }
+  }
+
+  getTableData(value: string) {
+    const tableData = [
+      {
+        id: 1,
+        name: 'Feline Ringworms',
+        symptoms:
+          'Inflamed skin, Ring- like lesions on the skin, Itchiness, Hairless patches, Crusty lesions on the skin',
+        treatment:
+          'Apply topical antifungal medications to all infected areas, Hair clipping, Chlorhexidine+miconazole based shampoo (twice a week), Lime sulfur dip (twice a week)',
+      },
+      {
+        id: 2, name: 'Feline Mange',
+        symptoms:
+          'Hairloss,Itchiness, Flaky skin, Irritated skin, Red skin, treatment',
+        treatment:
+          'Hair clipping, Medicated shampoo (use weekly), Topical applications which include compounds such as Selamectin, Milbemycin, Ivermectin and Imidacloprid-moxidectin',
+
+      },
+      {
+        id: 3, name: 'Feline Tapeworms',
+        symptoms:
+          'Diarrhea, Emaciation, Seizures, Shaggy coat, Loss of appetite, Failure to thrive, Intestinal blockages, Intestinal compliations, Tapeworms in feces',
+        treatment:
+          'Deworming medication called anthelmintic, Use flea control products to control fleas in the environment.',
+
+      },
+      {
+        id: 4, name: 'Feline Liver Disease',
+        symptoms:
+          'Ascites (Swelling of abdomen), Lethargy, Loss of appetite, Increased thrist, Frequent urination, Weight loss, Bleeding disorders, Vomiting, Diarrhea, Yellow skin, Yellow eyes, Yellow gums, Excessive drooling',
+        treatment:
+          'Reduction in protein intake, Minimize dietary carbohydrate levels, Antibiotics, Liver protectant supplements called SAMe, Ursodiol, Medications that include Espirantel, Praziquantel, and Fenbendazole',
+
+      },
+      {
+        id: 5, name: 'Feline Mange',
+        symptoms:
+          'Hairloss,Itchiness, Flaky skin, Irritated skin, Red skin, treatment',
+        treatment:
+          'Hair clipping, Medicated shampoo (use weekly), Topical applications which include compounds such as Selamectin, Milbemycin, Ivermectin and Imidacloprid-moxidectin',
+
+      },
+      {
+        id: 6, name: 'Feline Lower Urinary Tract Disease (FLUTD)',
+        symptoms:
+          'Straining to urinate, Urinating small amounts, Frequent attempts to urinate, Prolonged attempts to urinate, Crying out while urinating, Excessive licking of genital areas, Urinating outside the litter box, Blood in urine, Distress',
+        treatment:
+          'Feed small meals on a freuquent basis, Provide adequate number of litter boxes with the type of litter that the cat prefer, Provide fresh, clean water at all times, Keep litter boxes in quiet and safe areas of the house, Keep litter boxes clean, Minimize major changes in routine',
+
+      },
+      {
+        id: 7, name: 'Feline Rabies',
+        symptoms:
+          'Fever, Lethargy, Loss of appetite, Weakness, Paralysis of hind legs, Seizures, Difficulty breathing, Drooling, Aggression, Depression, Coma, Loss of muscle control, Foaming at mouth, Sudden death',
+        treatment:
+          'There is no cure or treatment for rabies once symptoms appear. The disease results in death, If your cat interacts with a rabid animal, consult your veterinarian immediately, If you think you have bitten by  rabid animal, consult your doctor immediately, Vaccinate your cat annually to protect it from rabies virus.',
+      },
+      {
+        id: 8, name: 'Canine Lupus',
+        symptoms:
+          'Anemia,Fever,Lethargy,Loss of appetite,Weight loss,Muscle stiffness,Joint pain,Swelling in joints,Increased thirst,Frequent urination,Ulcer,Twitching,Seizures,Hair loss,Skin color changes,Crusty skin',
+        treatment:
+          'Topical oinments such as tacrolimus (apply for ten minutes),Topical steroid creams (apply for ten minutes),Antibiotics such as tetracycline,Niacinamide,Immune suppressant such as cyclosporine',
+      },
+      {
+        id: 9, name: 'Canine Impetigo',
+        symptoms:
+          'Pimple-like lesions,Acne,Rash,Inflamed skin,Pus filled blisters,Hair loss,Crusty skin,Scratching infected areas,Licking infected areas,Biting infected areas,Depression, Weight loss',
+        treatment:
+          'Pimple-like lesions,Acne,Rash,Inflamed skin,Pus filled blisters,Hair loss,Crusty skin,Scratching infected areas,Licking infected areas,Biting infected areas,Depression,Weight loss',
+      },
+
+      {
+        id: 10, name: 'Canine Mange',
+        symptoms:
+          'Hair loss,Irritated skin,Rash,Thick yellow crusts,Bacteria infection,Yeast infection,Itchiness,Thickening of skin,Lymph node inflammation,Emaciation',
+        treatment:
+          'Hair clipping, Medicated shampoo (Use weekly), Topical applications which include compounds such as Selamectin, Milbemycin, Ivermectin and Imidacloprid-moxidectin',
+      },
+      {
+        id: 11, name: 'Canine Distemper',
+        symptoms:
+          'Coughing,Dyspnea,Pneumonia,Diarrhea,Vomiting,Purulent nasal discharge,Enamel hypoplasia,Hyperkeratosis,Circling,Head tilt,Nystagmus,Partial paralysis,Complete paralysis,Convulsion,Dementia,Involuntary jerky twitching,Muscles contraction,Convulsion contraction',
+        treatment:
+          'There is no cure for distemper infection once symptoms appear,Separate infected dogs from other dogs,Vaccinate your dogs annually to prevent the distemper virus.',
+      },
+
+      {
+        id: 12, name: 'Canine Parvovirus',
+        symptoms:
+          'Loss of appetite,Abdominal pain,Abdominal bloating,Bloody diarrhea,Diarrhea,Vomiting, Dehydration',
+        treatment:
+          'Immediately isolate from other pets to prevent the spread of infection,Consult your vetarinarian immediately.',
+      },
+      {
+        id: 13, name: 'Canine Heartworm',
+        symptoms:
+          'Labored breathing,Coughing,Vomiting,Weight loss,Weakness,Fatigue',
+        treatment:
+          'Consult your vetarinarian immediately.',
+      },
+      {
+        id: 14, name: 'Canine Rabies',
+        symptoms:
+          'Restlessness,Aggression,Irritability,Apprehension,Biting,Snapping at any form of stimulus,Licking,Chewing,Fever,Hiding in dark places,Eating unusual objects,Paralysis of throat,Paralysis of jaw muscles,Foaming at mouth,Disorientation,Incoordination,Staggering,Paralysis of hind legs,Loss of appetite,Weakness,Seizures,Sudden death',
+        treatment:
+          'There is no cure or treatment for rabies once symptoms appear. The disease results in death,If your dog interacts with a rabid animal, consult your veterinarian immediately,If you think you have bitten by  rabid animal, consult your doctor immediately,Vaccinate your dog annually to prevent the rabies virus.',
+      }
+    ];
+
+    // tableData filter by value
+    const filteredTableData = tableData.filter((item) => {
+      return item.name.toLowerCase().includes(value.toLowerCase());
+    }
+    );
+    return filteredTableData;
   }
 }

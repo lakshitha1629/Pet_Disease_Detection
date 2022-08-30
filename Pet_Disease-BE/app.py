@@ -67,7 +67,9 @@ class GetPredictionOutput(Resource):
 
     def post(self):
         try:
+            print(request)
             data = request.get_json()
+            print(data)
             predictData = []
             for x in data:
                 predictData.append(x["name"])
