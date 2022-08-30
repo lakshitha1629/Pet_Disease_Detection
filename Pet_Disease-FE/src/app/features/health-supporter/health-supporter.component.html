@@ -81,10 +81,9 @@
                 </div>
               </div>
               <div class="col-12 text-right">
-                <button class="btn-new btn-primary" [disabled]="active === 3" (click)="getPredictionOutput()">
+                <button class="btn-new btn-primary" [disabled]="active === 3" (click)="getPredictionOutput()"  *ngIf="selectedDiseaseFeline?.length > 0 || selectedDiseaseCanine?.length > 0">
                   Next <i class="fa fa-arrow-right"></i>
                 </button>
-
                 <button class="btn-new btn-secondry" [disabled]="active === 3" (click)="nav.select(3)">
                   Skip <i class="fa fa-arrow-right"></i>
                 </button>

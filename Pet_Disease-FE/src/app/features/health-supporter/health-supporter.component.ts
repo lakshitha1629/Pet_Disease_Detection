@@ -36,6 +36,7 @@ export class HealthSupporterComponent implements OnInit {
   selectedDiseaseCanine: any[] = [];
   selectedPetCategory: number = 0;
   selectedPetCategoryName: string = 'feline';
+  analysisValue: any;
 
   resultList: any[] = [];
 
@@ -254,6 +255,20 @@ export class HealthSupporterComponent implements OnInit {
         if (res.type === HttpEventType.Response) {
           console.log('Upload complete');
           console.log(res.body);
+          this.analysisValue = res.body;
+          if(this.selectedPetCategory == 1){
+            if(this.analysisValue.LupusDotsCount < 4 && this.analysisValue.LupusDotsCount > 0){
+              this.resultList.push('Canine Lupus');
+            }
+
+            if(this.analysisValue.RedDotsCount < 10 && this.analysisValue.LupusDotsCount < 4){
+              this.resultList.push('Canine Impetigo');
+            }
+          }else{
+            if(this.analysisValue.LupusDotsCount < 6){
+              this.resultList.push('Feline Ringworms');
+            }
+          }
           this.diseasePercentage = res.body.diseasePercentage;
           this.whiteDotsCount = res.body.whiteDotsCount;
           this.yellowDotsCount = res.body.yellowDotsCount;
@@ -291,6 +306,7 @@ export class HealthSupporterComponent implements OnInit {
           console.log(res);
           this.resultList = res.predict;
           console.log('Succefully Added');
+          console.log(this.resultList);
         });
     } else {
       this.spinner.show();
