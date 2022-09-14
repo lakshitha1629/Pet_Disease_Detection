@@ -1,0 +1,2 @@
+0 CanineImpetigo
+1 CanineLupus
