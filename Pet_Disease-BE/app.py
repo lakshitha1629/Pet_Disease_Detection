@@ -67,10 +67,15 @@ class GetAIDetectionOutput(Resource):
 
             if float(prediction[0][1]) > 0.5:
                 predictionValue = "CanineLupus"
+                diseasePercentage = float(prediction[0][1]) * 100
             else:
                 predictionValue = "CanineImpetigo"
+                diseasePercentage = float(prediction[0][0]) * 100
 
-            return {'output':predictionValue}
+            return {
+                'prediction' : predictionValue,
+                'diseasePercentage': diseasePercentage
+            }
 
         except Exception as error:
             return {'error': error}
