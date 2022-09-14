@@ -1,8 +1,7 @@
 export interface Uploader {
   id?: number;
   diseasePercentage?: number;
-  whiteDotsCount?: number;
-  yellowDotsCount?: number;
+  prediction?: string;
 }
 
 export function createUploader(params: Partial<Uploader>) {

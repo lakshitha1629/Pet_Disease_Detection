@@ -222,13 +222,13 @@
                   *ngIf="openCVLoadResult | async as result"
                 >
                   <div class="badge badge-success" *ngIf="result.loading">
-                    Waiting for OpenCV.js to load!
+                    Waiting for Kears model to load!
                   </div>
                   <div class="badge badge-primary" *ngIf="result.ready">
-                    OpenCV.js is ready!
+                    Kears model is ready!
                   </div>
                   <div class="badge badge-warning" *ngIf="result.error">
-                    OpenCV.js load error!
+                    Kears model load error!
                   </div>
                 </div>
                 <hr />
@@ -248,10 +248,13 @@
                   </div>
 
                   <div class="col-6 text-justify output-box">
-                    <h4 class="text-center">OpenCV data analysis</h4>
+                    <h4 class="text-center">Kears AI data analysis</h4>
                     <hr />
                     <h6 class="text-center">Disease Percentage</h6>
-                    <h6 class="text-center">{{ diseasePercentage }}</h6>
+                    <h6 class="text-center">{{ diseasePercentage | number : '1.2-2' }}%</h6>
+                    <br>
+                    <h6 class="text-center">Prediction</h6>
+                    <h6 class="text-center">{{ prediction }}</h6>
                   </div>
                   <div class="col-12 text-right">
                     <button

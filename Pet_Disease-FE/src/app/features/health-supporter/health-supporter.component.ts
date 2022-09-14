@@ -28,8 +28,7 @@ export class HealthSupporterComponent implements OnInit {
   activeType: Number = 1;
   activeType2: Number = 1;
   pointCount: Number;
-  whiteDotsCount: number = 0;
-  yellowDotsCount: number = 0;
+  prediction: string = '';
   Output: number;
   imageUploadBoolean: number = 0;
   selectedDiseaseFeline: any[] = [];
@@ -256,31 +255,20 @@ export class HealthSupporterComponent implements OnInit {
           console.log('Upload complete');
           console.log(res.body);
           this.analysisValue = res.body;
-          if (this.selectedPetCategoryName == 'feline') {
-            if (this.analysisValue.LupusDotsCount < 6) {
-              this.resultList.push('Feline Ringworms');
-            }
-
-          } else {
-            if (this.analysisValue.LupusDotsCount < 4 && this.analysisValue.LupusDotsCount > 0) {
-              this.resultList.push('Canine Lupus');
-            }
-
-            if (this.analysisValue.RedDotsCount < 10 && this.analysisValue.LupusDotsCount < 4) {
-              this.resultList.push('Canine Impetigo');
-            }
+          if (res.body.prediction == 'CanineImpetigo') {
+            this.resultList.push('Canine Impetigo');
+          }else{
+            this.resultList.push('Canine Lupus');
           }
           this.diseasePercentage = res.body.diseasePercentage;
-          this.whiteDotsCount = res.body.whiteDotsCount;
-          this.yellowDotsCount = res.body.yellowDotsCount;
+          this.prediction = res.body.prediction;
           this.active = 3;
           this.imageUploadBoolean = 1;
           this.spinner.hide();
           this.uploaderService.addUploaderItem({
             id: 1,
             diseasePercentage: this.diseasePercentage,
-            whiteDotsCount: this.whiteDotsCount,
-            yellowDotsCount: this.yellowDotsCount,
+            prediction: this.prediction
           } as Uploader);
         }
       },

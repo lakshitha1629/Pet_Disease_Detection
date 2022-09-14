@@ -13,7 +13,7 @@ export class UploaderDataService {
   upload(file: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this.httpClient.post<any>(`${environment.apiUrl}getDetectionOutput`, formData, {
+    return this.httpClient.post<any>(`${environment.apiUrl}getAIDetectionOutput`, formData, {
       reportProgress: true,
       responseType: 'json',
       observe: 'events'
@@ -31,7 +31,7 @@ export class UploaderDataService {
   // }
 
   getFiles(): Observable<any> {
-    return this.httpClient.get(`${environment.apiUrl}getDetectionOutput`);
+    return this.httpClient.get(`${environment.apiUrl}getAIDetectionOutput`);
   }
 
 }
