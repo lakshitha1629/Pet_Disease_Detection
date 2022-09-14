@@ -90,6 +90,38 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "ImageProcessingAI",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/User/OneDrive/Desktop/Canine Impetigo/2.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/getAIDetectionOutput",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"getAIDetectionOutput"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
