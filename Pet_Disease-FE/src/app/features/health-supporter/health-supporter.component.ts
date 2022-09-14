@@ -36,7 +36,7 @@ export class HealthSupporterComponent implements OnInit {
   selectedPetCategory: number = 0;
   selectedPetCategoryName: string = 'feline';
   analysisValue: any;
-
+  isImage:boolean = false;
   resultList: any[] = [];
 
   diseasesFeline = [
@@ -257,8 +257,10 @@ export class HealthSupporterComponent implements OnInit {
           this.analysisValue = res.body;
           if (res.body.prediction == 'CanineImpetigo') {
             this.resultList.push('Canine Impetigo');
+            this.isImage = true;
           }else{
             this.resultList.push('Canine Lupus');
+            this.isImage = true;
           }
           this.diseasePercentage = res.body.diseasePercentage;
           this.prediction = res.body.prediction;
@@ -453,18 +455,29 @@ export class HealthSupporterComponent implements OnInit {
   }
 
   getDataFilter(value: any) {
+    const data = this.removeDuplicates(value);
     if (this.selectedPetCategoryName == 'canine') {
-      const filteredTableData = value.filter(function (a) {
+      const filteredTableData = data.filter(function (a) {
         return a.toLowerCase().includes('canine');
       });
       return filteredTableData
     } else if (this.selectedPetCategoryName == 'feline') {
-      const filteredTableData = value.filter(function (a) {
+      const filteredTableData = data.filter(function (a) {
         return a.toLowerCase().includes('feline');
       });
       return filteredTableData
     }else{
       return []
     }
+  }
+
+  removeDuplicates(arr) {
+    let unique_array = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (unique_array.indexOf(arr[i]) == -1) {
+        unique_array.push(arr[i]);
+      }
+    }
+    return unique_array;
   }
 }
